@@ -6,4 +6,5 @@ pub mod medical_record;
 pub mod patient;
 pub mod patient_procedure;
 pub mod procedure;
+pub mod statistic;
 pub mod user;

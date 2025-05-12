@@ -96,7 +96,7 @@ async fn list_clients(
         filters.name.as_deref(),
         filters.phone.as_deref(),
         filters.assigned_to,
-        filters.limit.unwrap_or(50),
+        filters.limit.unwrap_or(50).min(400),
         filters.offset.unwrap_or(0)
     )
     .fetch_all(pool.get_ref())

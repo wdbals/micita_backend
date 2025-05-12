@@ -20,6 +20,7 @@ async fn main() -> std::io::Result<()> {
     info!("Iniciando el servidor");
     let allowed_origin =
         std::env::var("ALLOWED_ORIGIN").expect("ALLOWED_ORIGIN debe estar declarado");
+    let port = std::env::var("PORT").unwrap_or(4000.to_string());
     let db_pool = connect_to_db()
         .await
         .expect("Fallo la conexión a la base de datos");
@@ -38,7 +39,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(auth)
             .configure(routes::config)
     })
-    .bind("0.0.0.0:8080")?
+    .bind(format!("0.0.0.0:{}", port))?
     .run()
     .await
 }

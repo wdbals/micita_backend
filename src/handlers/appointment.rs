@@ -11,10 +11,12 @@ use validator::Validate;
 ///
 /// # Parámetros (opcionales vía query string)
 /// - `patient_id`: Filtrar por mascota
+/// - `cliente_id`: Filtrar por dueño de la mascota
 /// - `veterinarian_id`: Filtrar por veterinario
 /// - `status`: Filtrar por estado (scheduled, completed, etc.)
 /// - `start_date`: Citas después de esta fecha
 /// - `end_date`: Citas antes de esta fecha
+/// - reason_contains: Filtra por razón
 /// - `limit`: Máximo de resultados (default: 50)
 /// - `offset`: Desplazamiento (default: 0)
 ///
@@ -58,7 +60,7 @@ async fn list_appointments(
         filters.start_date,
         filters.end_date,
         filters.reason_contains,
-        filters.limit.unwrap_or(50),
+        filters.limit.unwrap_or(50).min(400),
         filters.offset.unwrap_or(0)
     )
     .fetch_all(pool.get_ref())
@@ -69,10 +71,12 @@ async fn list_appointments(
     })?;
 
     // Convertir a respuestas enriquecidas
-    let mut responses = Vec::new();
-    for appt in appointments {
-        responses.push(AppointmentResponse::from_appointment(appt, pool.get_ref()).await?);
-    }
+    let responses = futures::future::try_join_all(
+        appointments
+            .into_iter()
+            .map(|app| async { AppointmentResponse::from_appointment(app, pool.get_ref()).await }),
+    )
+    .await?;
 
     Ok(HttpResponse::Ok().json(responses))
 }

@@ -8,63 +8,6 @@ use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
 use validator::Validate;
 
-/// Parámetros de paginación
-#[derive(Debug, Deserialize)]
-pub struct PaginationParams {
-    limit: Option<i64>,
-    offset: Option<i64>,
-}
-
-// /// Lista todos los usuarios activos con paginación básica.
-// /// Estan ordenados por fecha de creación descendente.
-// ///
-// /// # Parámetros (opcionales vía query string)
-// /// - `limit`: Límite de resultados (default: 100)
-// /// - `offset`: Desplazamiento (default: 0)
-// ///
-// /// # Ejemplo
-// /// GET /users?limit=10&offset=20
-// #[actix_web::get("")]
-// async fn list_users(
-//     pool: web::Data<PgPool>,
-//     query: web::Query<PaginationParams>,
-// ) -> Result<HttpResponse, ApiError> {
-//     tracing::info!("Listando usuarios con parámetros: {:?}", query);
-
-//     let users = sqlx::query_as!(
-//         User,
-//         r#"
-//         SELECT
-//             id,
-//             email,
-//             password_hash,
-//             name,
-//             role as "role: UserRole",
-//             license_number,
-//             is_active as "is_active!: bool",
-//             created_at as "created_at!: chrono::DateTime<chrono::Utc>",
-//             updated_at as "updated_at!: chrono::DateTime<chrono::Utc>"
-//         FROM users
-//         WHERE is_active = true
-//         ORDER BY created_at DESC
-//         LIMIT $1 OFFSET $2
-//         "#,
-//         query.limit.unwrap_or(100),
-//         query.offset.unwrap_or(0)
-//     )
-//     .fetch_all(pool.get_ref())
-//     .await
-//     .map_err(|e| {
-//         tracing::error!("Error al listar usuarios: {}", e);
-//         ApiError::InternalServerError("No se pudieron obtener los usuarios".into())
-//     })?
-//     .into_iter()
-//     .collect::<Vec<User>>();
-
-//     let users_response: Vec<UserResponse> = users.into_iter().map(UserResponse::from).collect();
-//     Ok(HttpResponse::Ok().json(users_response))
-// }
-
 /// Lista usuarios con filtros avanzados y paginación
 ///
 /// # Parámetros (opcionales vía query string)

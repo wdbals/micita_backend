@@ -152,7 +152,7 @@ async fn list_patients(
         filters.breed_id,
         filters.client_id,
         &filters.gender as &Option<AnimalGender>,
-        filters.limit.unwrap_or(50),
+        filters.limit.unwrap_or(50).min(400),
         filters.offset.unwrap_or(0)
     )
     .fetch_all(pool.get_ref())

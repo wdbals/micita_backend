@@ -106,7 +106,7 @@ async fn list_breeds(
         ORDER BY species ASC, name ASC
         LIMIT $1 OFFSET $2
         "#,
-        query.limit.unwrap_or(50),
+        query.limit.unwrap_or(50).min(400),
         query.offset.unwrap_or(0)
     )
     .fetch_all(pool.get_ref())
