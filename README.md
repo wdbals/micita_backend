@@ -62,61 +62,6 @@ cargo run
 
 > El servidor estará disponible en `http://localhost:8080`.
 
-
-## Endpoints
-
-### Usuarios
-
-- **GET /api/users**: Lista usuarios con filtros avanzados.
-- **GET /api/users/{id}**: Obtiene un usuario por ID.
-- **POST /api/users**: Crea un nuevo usuario.
-- **PUT /api/users/{id}**: Actualiza un usuario existente.
-- **DELETE /api/users/{id}**: Elimina un usuario (borrado lógico).
-- **POST /api/users/login**: Inicia sesión y obtiene un token JWT.
-
-### Clientes
-
-- **GET /api/clients**: Lista clientes con filtros avanzados.
-- **GET /api/clients/{id}**: Obtiene un cliente por ID.
-- **POST /api/clients**: Crea un nuevo cliente.
-- **PUT /api/clients/{id}**: Actualiza un cliente existente.
-- **DELETE /api/clients/{id}**: Elimina un cliente.
-
-### Pacientes
-
-- **GET /api/patients**: Lista pacientes con filtros avanzados.
-- **GET /api/patients/{id}**: Obtiene un paciente por ID.
-- **POST /api/patients**: Crea un nuevo paciente.
-- **PUT /api/patients/{id}**: Actualiza un paciente existente.
-- **DELETE /api/patients/{id}**: Elimina un paciente.
-
-### Citas
-
-- **GET /api/appointments**: Lista citas con filtros avanzados.
-- **GET /api/appointments/{id}**: Obtiene una cita por ID.
-- **POST /api/appointments**: Crea una nueva cita.
-- **PUT /api/appointments/{id}**: Actualiza una cita existente.
-- **DELETE /api/appointments/{id}**: Elimina una cita.
-
-### Procedimientos
-
-- **GET /api/procedures**: Lista procedimientos.
-- **POST /api/procedures**: Crea un nuevo procedimiento.
-- **PUT /api/procedures/{id}**: Actualiza un procedimiento existente.
-- **DELETE /api/procedures/{id}**: Elimina un procedimiento.
-
-### Registros médicos
-
-- **GET /api/medical_records**: Lista registros médicos con filtros avanzados.
-- **GET /api/medical_records/{id}**: Obtiene un registro médico por ID.
-- **POST /api/medical_records**: Crea un nuevo registro médico.
-- **PUT /api/medical_records/{id}**: Actualiza un registro médico existente.
-- **DELETE /api/medical_records/{id}**: Elimina un registro médico.
-
-### Estadísticas
-
-- **GET /api/stats**: Obtiene estadísticas generales del sistema.
-
 ## Estructura del proyecto
 
 - **src/auth.rs**: Funciones relacionadas con autenticación y manejo de JWT.
@@ -126,3 +71,8 @@ cargo run
 - **src/models/**: Modelos de datos y validaciones.
 - **src/middleware.rs**: Middleware para validación de API Key.
 - **src/routes.rs**: Configuración de rutas.
+
+## Documentación de la API
+
+La documentación completa de los endpoints, modelos y ejemplos se encuentra en:
+📄 [docs/api.md](docs/api.md)
