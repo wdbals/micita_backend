@@ -1,0 +1,9 @@
+pub mod appointment;
+pub mod breed;
+pub mod client;
+pub mod enums;
+pub mod medical_record;
+pub mod patient;
+pub mod patient_procedure;
+pub mod procedure;
+pub mod user;
