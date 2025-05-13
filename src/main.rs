@@ -7,7 +7,7 @@ mod models;
 mod routes;
 
 use actix_cors::Cors;
-use actix_web::{App, HttpServer, web};
+use actix_web::{App, HttpServer, http, web};
 use actix_web_httpauth::middleware::HttpAuthentication;
 use db::connect_to_db;
 use tracing::info;
@@ -26,15 +26,20 @@ async fn main() -> std::io::Result<()> {
         .expect("Fallo la conexión a la base de datos");
     HttpServer::new(move || {
         let cors = Cors::default()
-            .allowed_origin(&allowed_origin)
-            .allowed_methods(vec!["GET", "POST", "PUT", "DELETE"])
-            .allowed_headers(vec![actix_web::http::header::CONTENT_TYPE])
+            .allow_any_origin()
+            .allowed_methods(vec!["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+            .allowed_headers(vec![
+                http::header::CONTENT_TYPE,
+                http::header::AUTHORIZATION,
+                http::header::ACCEPT,
+            ])
             .max_age(3600);
 
         let auth = HttpAuthentication::bearer(middleware::api_key_validator);
 
         App::new()
             .app_data(web::Data::new(db_pool.clone()))
+            .wrap(actix_web::middleware::Logger::default())
             .wrap(cors)
             .wrap(auth)
             .configure(routes::config)
