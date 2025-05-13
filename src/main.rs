@@ -40,8 +40,8 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(web::Data::new(db_pool.clone()))
             .wrap(actix_web::middleware::Logger::default())
-            .wrap(cors)
             .wrap(auth)
+            .wrap(cors)
             .configure(routes::config)
     })
     .bind(format!("0.0.0.0:{}", port))?
